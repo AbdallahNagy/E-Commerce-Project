@@ -6,9 +6,9 @@ import {
   getCategory,
   updateCategory,
   deleteCategory,
-} from '../controllers/category.controller.js';
-import { protect, authorize } from '../middleware/auth.middleware.js';
-import { validate } from '../middleware/validate.middleware.js';
+} from '../controllers/category.controller';
+import { protect, authorize } from '../middleware/auth.middleware';
+import { validate } from '../middleware/validate.middleware';
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import Review from '../models/Review.js';
-import Order from '../models/Order.js';
-import ApiError from '../utils/ApiError.js';
+import Review from '../models/Review';
+import Order from '../models/Order';
+import ApiError from '../utils/ApiError';
 
 // POST /api/products/:productId/reviews
 export const createReview = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

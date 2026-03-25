@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
-import ApiError from '../utils/ApiError.js';
+import ApiError from '../utils/ApiError';
 
 export const errorHandler = (
   err: Error,

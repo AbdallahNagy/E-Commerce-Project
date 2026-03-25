@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import Cart from '../models/Cart.js';
-import Product from '../models/Product.js';
-import ApiError from '../utils/ApiError.js';
+import Cart from '../models/Cart';
+import Product from '../models/Product';
+import ApiError from '../utils/ApiError';
 import mongoose from 'mongoose';
 
 // GET /api/cart

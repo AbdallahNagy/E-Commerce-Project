@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
-import ApiError from '../utils/ApiError.js';
+import User from '../models/User';
+import ApiError from '../utils/ApiError';
 
 const signToken = (id: string): string => {
   const secret = process.env.JWT_SECRET!;

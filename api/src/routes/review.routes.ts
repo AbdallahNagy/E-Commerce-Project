@@ -5,9 +5,9 @@ import {
   getProductReviews,
   updateReview,
   deleteReview,
-} from '../controllers/review.controller.js';
-import { protect } from '../middleware/auth.middleware.js';
-import { validate } from '../middleware/validate.middleware.js';
+} from '../controllers/review.controller';
+import { protect } from '../middleware/auth.middleware';
+import { validate } from '../middleware/validate.middleware';
 
 const router = Router();
 

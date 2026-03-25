@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema, Types } from 'mongoose';
-import Product from './Product.js';
+import Product from './Product';
 
 export interface IReview extends Document {
   user: Types.ObjectId;

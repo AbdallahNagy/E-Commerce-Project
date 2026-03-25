@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import Product from '../models/Product.js';
-import ApiError from '../utils/ApiError.js';
+import Product from '../models/Product';
+import ApiError from '../utils/ApiError';
 
 // POST /api/products
 export const createProduct = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

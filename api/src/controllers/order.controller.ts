@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import Order from '../models/Order.js';
-import Cart from '../models/Cart.js';
-import Product from '../models/Product.js';
-import ApiError from '../utils/ApiError.js';
+import Order from '../models/Order';
+import Cart from '../models/Cart';
+import Product from '../models/Product';
+import ApiError from '../utils/ApiError';
 
 // POST /api/orders  — create order from cart
 export const createOrder = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

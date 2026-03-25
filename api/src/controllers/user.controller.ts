@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import User from '../models/User.js';
-import ApiError from '../utils/ApiError.js';
+import User from '../models/User';
+import ApiError from '../utils/ApiError';
 
 // GET /api/users
 export const getUsers = async (_req: Request, res: Response, next: NextFunction): Promise<void> => {

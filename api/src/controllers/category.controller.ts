@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import Category from '../models/Category.js';
-import ApiError from '../utils/ApiError.js';
+import Category from '../models/Category';
+import ApiError from '../utils/ApiError';
 
 // POST /api/categories
 export const createCategory = async (req: Request, res: Response, next: NextFunction): Promise<void> => {

@@ -3,14 +3,14 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 
-import authRoutes from './routes/auth.routes.js';
-import userRoutes from './routes/user.routes.js';
-import categoryRoutes from './routes/category.routes.js';
-import productRoutes from './routes/product.routes.js';
-import cartRoutes from './routes/cart.routes.js';
-import orderRoutes from './routes/order.routes.js';
-import reviewRoutes from './routes/review.routes.js';
-import { errorHandler } from './middleware/error.middleware.js';
+import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import categoryRoutes from './routes/category.routes';
+import productRoutes from './routes/product.routes';
+import cartRoutes from './routes/cart.routes';
+import orderRoutes from './routes/order.routes';
+import reviewRoutes from './routes/review.routes';
+import { errorHandler } from './middleware/error.middleware';
 
 
 const app: Application = express();

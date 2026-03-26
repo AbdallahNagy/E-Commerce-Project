@@ -16,7 +16,10 @@ import { errorHandler } from './middleware/error.middleware';
 const app: Application = express();
 
 // ── Middleware ──────────────────────────────────────────────
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:4200', 'http://localhost:5000'],
+  credentials: true,
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

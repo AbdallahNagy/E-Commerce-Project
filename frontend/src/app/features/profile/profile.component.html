@@ -1,0 +1,74 @@
+<div class="container-custom py-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-8">My Profile</h1>
+
+      @if (auth.currentUser(); as user) {
+        <div class="max-w-2xl">
+          <!-- Profile Card -->
+          <div class="card p-6 mb-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-2xl font-bold">
+                {{ user.name.charAt(0).toUpperCase() }}
+              </div>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">{{ user.name }}</h2>
+                <p class="text-gray-500">{{ user.email }}</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-4 bg-gray-50 rounded-lg">
+                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Role</p>
+                <p class="text-sm font-medium text-gray-900 capitalize">{{ user.role }}</p>
+              </div>
+              <div class="p-4 bg-gray-50 rounded-lg">
+                <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Member Since</p>
+                <p class="text-sm font-medium text-gray-900">{{ user.createdAt | date:'mediumDate' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div class="card p-6 mb-6">
+            <h3 class="font-semibold text-gray-900 mb-4">Saved Address</h3>
+            @if (user.address?.street) {
+              <div class="text-sm text-gray-600 space-y-1">
+                <p>{{ user.address?.street }}</p>
+                <p>{{ user.address?.city }}, {{ user.address?.state }} {{ user.address?.zip }}</p>
+                <p>{{ user.address?.country }}</p>
+              </div>
+            } @else {
+              <p class="text-sm text-gray-500">No address saved yet.</p>
+            }
+          </div>
+
+          <!-- Quick Links -->
+          <div class="card p-6">
+            <h3 class="font-semibold text-gray-900 mb-4">Quick Links</h3>
+            <div class="space-y-2">
+              <a routerLink="/orders" class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors no-underline group">
+                <div class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                  </svg>
+                  <span class="text-sm font-medium text-gray-700">My Orders</span>
+                </div>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a routerLink="/cart" class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors no-underline group">
+                <div class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-gray-400 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/>
+                  </svg>
+                  <span class="text-sm font-medium text-gray-700">Shopping Cart</span>
+                </div>
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>

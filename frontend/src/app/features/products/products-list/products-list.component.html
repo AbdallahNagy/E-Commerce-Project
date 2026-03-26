@@ -1,0 +1,85 @@
+<div class="container-custom py-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Products</h1>
+        <p class="text-gray-500 mt-1">{{ total() }} products found</p>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Sidebar Filters -->
+        <aside class="w-full lg:w-64 flex-shrink-0">
+          <div class="card p-5 space-y-6 lg:sticky lg:top-24">
+            <h3 class="font-semibold text-gray-900">Filters</h3>
+
+            <!-- Search -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+              <input type="text" [(ngModel)]="searchInput" (keyup.enter)="applyFilters()"
+                     class="input text-sm" placeholder="Search products...">
+            </div>
+
+            <!-- Category -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <select [(ngModel)]="selectedCategory" (change)="applyFilters()" class="input text-sm">
+                <option value="">All Categories</option>
+                @for (cat of categories(); track cat._id) {
+                  <option [value]="cat._id">{{ cat.name }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Price Range -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Price Range</label>
+              <div class="flex items-center gap-2">
+                <input type="number" [(ngModel)]="minPrice" (change)="applyFilters()"
+                       class="input text-sm" placeholder="Min" min="0">
+                <span class="text-gray-400">-</span>
+                <input type="number" [(ngModel)]="maxPrice" (change)="applyFilters()"
+                       class="input text-sm" placeholder="Max" min="0">
+              </div>
+            </div>
+
+            <!-- Sort -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+              <select [(ngModel)]="selectedSort" (change)="applyFilters()" class="input text-sm">
+                <option value="">Newest</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+              </select>
+            </div>
+
+            <!-- Clear Filters -->
+            <button (click)="clearFilters()" class="btn-secondary w-full text-sm">
+              Clear Filters
+            </button>
+          </div>
+        </aside>
+
+        <!-- Products Grid -->
+        <main class="flex-1">
+          @if (loading()) {
+            <app-loading-spinner />
+          } @else if (products().length === 0) {
+            <app-empty-state
+              title="No products found"
+              message="Try adjusting your filters or search query."
+              iconPath="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          } @else {
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              @for (product of products(); track product._id) {
+                <app-product-card [product]="product" />
+              }
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-8">
+              <app-pagination [currentPage]="currentPage()" [totalPages]="totalPages()" (pageChange)="onPageChange($event)" />
+            </div>
+          }
+        </main>
+      </div>
+    </div>

@@ -1,0 +1,41 @@
+<footer class="bg-white border-t border-gray-100 mt-auto">
+      <div class="container-custom py-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Brand -->
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-7 h-7 bg-primary-600 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+              </div>
+              <span class="text-lg font-bold text-gray-900">ShopHub</span>
+            </div>
+            <p class="text-sm text-gray-500">Your one-stop shop for quality products at great prices.</p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="text-sm font-semibold text-gray-900 mb-3">Quick Links</h4>
+            <nav class="flex flex-col gap-2">
+              <a routerLink="/" class="text-sm text-gray-500 hover:text-primary-600 no-underline">Home</a>
+              <a routerLink="/products" class="text-sm text-gray-500 hover:text-primary-600 no-underline">Products</a>
+              <a routerLink="/cart" class="text-sm text-gray-500 hover:text-primary-600 no-underline">Cart</a>
+            </nav>
+          </div>
+
+          <!-- Account -->
+          <div>
+            <h4 class="text-sm font-semibold text-gray-900 mb-3">Account</h4>
+            <nav class="flex flex-col gap-2">
+              <a routerLink="/profile" class="text-sm text-gray-500 hover:text-primary-600 no-underline">Profile</a>
+              <a routerLink="/orders" class="text-sm text-gray-500 hover:text-primary-600 no-underline">Orders</a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+          <p class="text-sm text-gray-400">&copy; {{ currentYear }} ShopHub. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>

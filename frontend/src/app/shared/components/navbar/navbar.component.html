@@ -1,0 +1,91 @@
+<nav class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+      <div class="container-custom">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a routerLink="/" class="flex items-center gap-2 no-underline">
+            <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+            </div>
+            <span class="text-xl font-bold text-gray-900">ShopHub</span>
+          </a>
+
+          <!-- Desktop Nav -->
+          <div class="hidden md:flex items-center gap-6">
+            <a routerLink="/" routerLinkActive="text-primary-600 font-semibold" [routerLinkActiveOptions]="{exact: true}"
+               class="text-gray-600 hover:text-primary-600 transition-colors no-underline">Home</a>
+            <a routerLink="/products" routerLinkActive="text-primary-600 font-semibold"
+               class="text-gray-600 hover:text-primary-600 transition-colors no-underline">Products</a>
+          </div>
+
+          <!-- Right Side -->
+          <div class="flex items-center gap-4">
+            @if (auth.isLoggedIn()) {
+              <!-- Cart -->
+              <a routerLink="/cart" class="relative text-gray-600 hover:text-primary-600 transition-colors no-underline">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/>
+                </svg>
+                @if (cartService.cartItemCount() > 0) {
+                  <span class="absolute -top-2 -right-2 bg-primary-600 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full font-medium">
+                    {{ cartService.cartItemCount() }}
+                  </span>
+                }
+              </a>
+
+              <!-- User Dropdown -->
+              <div class="relative">
+                <button (click)="toggleDropdown()" class="flex items-center gap-2 text-gray-600 hover:text-primary-600 transition-colors cursor-pointer bg-transparent border-0">
+                  <div class="w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-semibold text-sm">
+                    {{ auth.currentUser()?.name?.charAt(0)?.toUpperCase() }}
+                  </div>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                  </svg>
+                </button>
+
+                @if (dropdownOpen()) {
+                  <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
+                    <div class="px-4 py-2 border-b border-gray-100">
+                      <p class="text-sm font-medium text-gray-900">{{ auth.currentUser()?.name }}</p>
+                      <p class="text-xs text-gray-500">{{ auth.currentUser()?.email }}</p>
+                    </div>
+                    <a routerLink="/profile" (click)="closeDropdown()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 no-underline">Profile</a>
+                    <a routerLink="/orders" (click)="closeDropdown()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 no-underline">My Orders</a>
+                    <button (click)="logout()" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 cursor-pointer bg-transparent border-0">Logout</button>
+                  </div>
+                }
+              </div>
+            } @else {
+              <a routerLink="/login" class="text-gray-600 hover:text-primary-600 transition-colors no-underline text-sm font-medium">Login</a>
+              <a routerLink="/register" class="btn-primary text-sm no-underline">Register</a>
+            }
+
+            <!-- Mobile Menu Button -->
+            <button (click)="toggleMobile()" class="md:hidden text-gray-600 hover:text-primary-600 cursor-pointer bg-transparent border-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                @if (mobileOpen()) {
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                } @else {
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                }
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        @if (mobileOpen()) {
+          <div class="md:hidden border-t border-gray-100 py-3 space-y-2">
+            <a routerLink="/" (click)="closeMobile()" class="block px-2 py-2 text-gray-600 hover:text-primary-600 rounded-lg no-underline">Home</a>
+            <a routerLink="/products" (click)="closeMobile()" class="block px-2 py-2 text-gray-600 hover:text-primary-600 rounded-lg no-underline">Products</a>
+          </div>
+        }
+      </div>
+    </nav>
+
+    <!-- Click outside to close dropdown -->
+    @if (dropdownOpen()) {
+      <div class="fixed inset-0 z-40" (click)="closeDropdown()"></div>
+    }

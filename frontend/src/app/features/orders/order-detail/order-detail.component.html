@@ -1,0 +1,78 @@
+@if (loading()) {
+      <app-loading-spinner />
+    } @else if (order()) {
+      <div class="container-custom py-8">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <a routerLink="/orders" class="text-sm text-gray-500 hover:text-primary-600 no-underline">← Back to Orders</a>
+            <h1 class="text-2xl font-bold text-gray-900 mt-2">Order #{{ order()!._id.slice(-8).toUpperCase() }}</h1>
+            <p class="text-sm text-gray-500 mt-1">Placed on {{ order()!.createdAt | date:'medium' }}</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span [class]="getStatusClass(order()!.orderStatus)">{{ order()!.orderStatus }}</span>
+            <span [class]="getPaymentClass(order()!.paymentStatus)">{{ order()!.paymentStatus }}</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Order Items -->
+          <div class="lg:col-span-2">
+            <div class="card">
+              <div class="p-5 border-b border-gray-100">
+                <h3 class="font-semibold text-gray-900">Order Items</h3>
+              </div>
+              <div class="divide-y divide-gray-100">
+                @for (item of order()!.items; track item.name) {
+                  <div class="p-5 flex items-center justify-between">
+                    <div>
+                      <p class="font-medium text-gray-900">{{ item.name }}</p>
+                      <p class="text-sm text-gray-500">Qty: {{ item.quantity }} × ${{ item.price.toFixed(2) }}</p>
+                    </div>
+                    <span class="font-semibold text-gray-900">${{ (item.price * item.quantity).toFixed(2) }}</span>
+                  </div>
+                }
+              </div>
+              <div class="p-5 border-t border-gray-100 bg-gray-50 flex justify-between">
+                <span class="font-semibold text-gray-900">Total</span>
+                <span class="text-lg font-bold text-gray-900">${{ order()!.totalPrice.toFixed(2) }}</span>
+              </div>
+            </div>
+
+            <!-- Cancel Button -->
+            @if (order()!.orderStatus === 'processing') {
+              <button (click)="cancelOrder()" [disabled]="cancelling()" class="btn-danger mt-4">
+                {{ cancelling() ? 'Cancelling...' : 'Cancel Order' }}
+              </button>
+            }
+          </div>
+
+          <!-- Shipping Info -->
+          <div>
+            <div class="card p-5">
+              <h3 class="font-semibold text-gray-900 mb-4">Shipping Address</h3>
+              <div class="text-sm text-gray-600 space-y-1">
+                <p>{{ order()!.shippingAddress.street }}</p>
+                <p>{{ order()!.shippingAddress.city }}, {{ order()!.shippingAddress.state }} {{ order()!.shippingAddress.zip }}</p>
+                <p>{{ order()!.shippingAddress.country }}</p>
+              </div>
+            </div>
+
+            <div class="card p-5 mt-4">
+              <h3 class="font-semibold text-gray-900 mb-4">Payment</h3>
+              <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <span class="text-sm text-gray-600">Cash on Delivery</span>
+              </div>
+            </div>
+
+            <div class="mt-4 space-y-2">
+              <a routerLink="/products" class="btn-primary w-full no-underline text-center block">Continue Shopping</a>
+              <a routerLink="/orders" class="btn-secondary w-full no-underline text-center block">View All Orders</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    }

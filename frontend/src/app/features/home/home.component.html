@@ -1,0 +1,118 @@
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white">
+  <div class="container-custom py-20 md:py-28">
+    <div class="max-w-2xl">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+        Discover Quality Products
+      </h1>
+      <p class="text-lg md:text-xl text-primary-100 mb-8 leading-relaxed">
+        Shop from our curated collection of premium products. Fast delivery, great prices, and cash on delivery.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a routerLink="/products" class="btn bg-white text-primary-700 hover:bg-primary-50 px-8 py-3 text-lg font-semibold no-underline">
+          Shop Now
+        </a>
+        <a routerLink="/products" fragment="categories" class="btn border border-white/30 text-white hover:bg-white/10 px-8 py-3 text-lg no-underline">
+          Browse Categories
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Bar -->
+<section class="bg-white border-b border-gray-100">
+  <div class="container-custom py-6">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">Free Shipping</p>
+          <p class="text-xs text-gray-500">On all orders</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">Cash on Delivery</p>
+          <p class="text-xs text-gray-500">Pay when you receive</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-medium text-gray-900">Secure Shopping</p>
+          <p class="text-xs text-gray-500">100% guaranteed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+@if (categories().length > 0) {
+  <section class="py-12 md:py-16" id="categories">
+    <div class="container-custom">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="section-title">Shop by Category</h2>
+        <a routerLink="/products" class="text-sm font-medium no-underline">View All →</a>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        @for (cat of categories(); track cat._id) {
+          <a [routerLink]="['/products']" [queryParams]="{category: cat._id}"
+             class="card p-6 text-center hover:shadow-md transition-shadow group no-underline">
+            <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-200 transition-colors">
+              <svg class="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+              </svg>
+            </div>
+            <h3 class="text-sm font-medium text-gray-900">{{ cat.name }}</h3>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Latest Products -->
+<section class="py-12 md:py-16 bg-white">
+  <div class="container-custom">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="section-title">Latest Products</h2>
+      <a routerLink="/products" class="text-sm font-medium no-underline">View All →</a>
+    </div>
+
+    @if (loading()) {
+      <app-loading-spinner />
+    } @else {
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        @for (product of products(); track product._id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-gray-900 text-white">
+  <div class="container-custom py-16 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-4">Ready to start shopping?</h2>
+    <p class="text-gray-400 mb-8 max-w-md mx-auto">Join thousands of happy customers. Cash on delivery available on all orders.</p>
+    <a routerLink="/products" class="btn bg-primary-600 text-white hover:bg-primary-700 px-8 py-3 text-lg no-underline">
+      Explore Products
+    </a>
+  </div>
+</section>

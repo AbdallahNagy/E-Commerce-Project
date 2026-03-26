@@ -1,0 +1,129 @@
+<div class="container-custom py-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+
+      @if (cartService.loading()) {
+        <app-loading-spinner />
+      } @else if (!cartService.cart() || cartService.cart()!.items.length === 0) {
+        <div class="text-center py-12">
+          <p class="text-gray-500 mb-4">Your cart is empty</p>
+          <a routerLink="/products" class="btn-primary no-underline">Go Shopping</a>
+        </div>
+      } @else {
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Shipping Form -->
+          <div class="lg:col-span-2">
+            <div class="card p-6">
+              <h2 class="font-semibold text-gray-900 text-lg mb-6">Shipping Address</h2>
+              <form [formGroup]="form" (ngSubmit)="placeOrder()">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <!-- Street -->
+                  <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                    <input type="text" formControlName="street" class="input"
+                           [class.input-error]="form.get('street')?.touched && form.get('street')?.invalid"
+                           placeholder="123 Main St">
+                    @if (form.get('street')?.touched && form.get('street')?.hasError('required')) {
+                      <p class="text-red-500 text-xs mt-1">Street is required</p>
+                    }
+                  </div>
+
+                  <!-- City -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                    <input type="text" formControlName="city" class="input"
+                           [class.input-error]="form.get('city')?.touched && form.get('city')?.invalid"
+                           placeholder="New York">
+                    @if (form.get('city')?.touched && form.get('city')?.hasError('required')) {
+                      <p class="text-red-500 text-xs mt-1">City is required</p>
+                    }
+                  </div>
+
+                  <!-- State -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                    <input type="text" formControlName="state" class="input"
+                           [class.input-error]="form.get('state')?.touched && form.get('state')?.invalid"
+                           placeholder="NY">
+                    @if (form.get('state')?.touched && form.get('state')?.hasError('required')) {
+                      <p class="text-red-500 text-xs mt-1">State is required</p>
+                    }
+                  </div>
+
+                  <!-- Zip -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                    <input type="text" formControlName="zip" class="input"
+                           [class.input-error]="form.get('zip')?.touched && form.get('zip')?.invalid"
+                           placeholder="10001">
+                    @if (form.get('zip')?.touched && form.get('zip')?.hasError('required')) {
+                      <p class="text-red-500 text-xs mt-1">ZIP code is required</p>
+                    }
+                  </div>
+
+                  <!-- Country -->
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                    <input type="text" formControlName="country" class="input"
+                           [class.input-error]="form.get('country')?.touched && form.get('country')?.invalid"
+                           placeholder="United States">
+                    @if (form.get('country')?.touched && form.get('country')?.hasError('required')) {
+                      <p class="text-red-500 text-xs mt-1">Country is required</p>
+                    }
+                  </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div class="flex items-center gap-3">
+                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    <div>
+                      <p class="font-medium text-green-800">Cash on Delivery</p>
+                      <p class="text-sm text-green-600">Pay when your order is delivered</p>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="submit" [disabled]="placing()" class="btn-primary w-full mt-6 py-3">
+                  @if (placing()) {
+                    <svg class="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                    Placing Order...
+                  } @else {
+                    Place Order
+                  }
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div>
+            <div class="card p-6 lg:sticky lg:top-24">
+              <h3 class="font-semibold text-gray-900 mb-4">Order Summary</h3>
+              <div class="space-y-3 mb-4">
+                @for (item of cartService.cart()!.items; track item._id) {
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-600 truncate mr-2">{{ item.product.name }} × {{ item.quantity }}</span>
+                    <span class="text-gray-900 font-medium flex-shrink-0">${{ (item.price * item.quantity).toFixed(2) }}</span>
+                  </div>
+                }
+              </div>
+              <hr class="border-gray-200 my-3">
+              <div class="flex justify-between text-sm text-gray-600">
+                <span>Shipping</span>
+                <span class="text-green-600">Free</span>
+              </div>
+              <hr class="border-gray-200 my-3">
+              <div class="flex justify-between font-semibold text-gray-900 text-lg">
+                <span>Total</span>
+                <span>${{ cartService.cartTotal().toFixed(2) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
